@@ -37,12 +37,12 @@ module.exports = {
     rules: [
       // {
       //   enforce: 'pre',
-      //   test: /\.(js|jsx)$/,
+      //   test: /\.(ts|tsx)$/,
       //   exclude: /node_modules/,
       //   loader: 'eslint-loader',
       // },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
@@ -122,7 +122,7 @@ module.exports = {
     pathinfo: false,
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.json'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts', '.json'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
       assets: path.resolve(__dirname, '../src/assets'),
