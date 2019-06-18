@@ -3,7 +3,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -13,15 +13,15 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
   mode: 'production',
   entry: [
-    './src/index.jsx',
+    './src/index.tsx',
   ],
   plugins: [
     new MiniCssExtractPlugin({
       chunkFilename: 'static/css/[name].[contenthash:8].css',
     }),
-    new CleanWebpackPlugin(['dist/prd'],
+    new CleanWebpackPlugin(
       {
-        root: path.resolve(__dirname, '../'),
+        cleanOnceBeforeBuildPatterns: ['dist/prd'],
       }),
     new HtmlWebpackPlugin({
       title: 'PRD ENV',
@@ -36,14 +36,14 @@ module.exports = {
   ],
   module: {
     rules: [
+      // {
+      //   enforce: 'pre',
+      //   test: /\.(ts|tsx)$/,
+      //   exclude: /node_modules/,
+      //   loader: 'eslint-loader',
+      // },
       {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-      },
-      {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
@@ -123,7 +123,7 @@ module.exports = {
     path: path.resolve(__dirname, '../dist/prd'),
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.json'],
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts', '.json'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
       assets: path.resolve(__dirname, '../src/assets'),
@@ -153,8 +153,8 @@ module.exports = {
           compress: {
             unused: true,
             dead_code: true,
-            warnings: false,
           },
+          warnings: false,
         },
         cache: true,
         parallel: true,
