@@ -3,13 +3,12 @@ import * as ReactDOM from 'react-dom';
 
 import './style.scss';
 
-interface IResult {
-  result: string
+interface Result {
+  result: string;
 }
 
-
-class Index extends React.Component<object, IResult> {
-  constructor(props) {
+class Index extends React.Component<object, Result> {
+  public constructor(props) {
     super(props);
 
     this.state = {
@@ -17,7 +16,7 @@ class Index extends React.Component<object, IResult> {
     };
   }
 
-  async componentDidMount() {
+  public async componentDidMount() {
     const module = await import('./math');
     const Math = module.default;
     const title = `4 * 4 = ${Math.square(5)}`;
@@ -26,12 +25,9 @@ class Index extends React.Component<object, IResult> {
     });
   }
 
-  render() {
+  public render() {
     return <div>{this.state.result}</div>;
   }
 }
 
-ReactDOM.render(
-  <Index/>,
-  document.getElementById('app'),
-);
+ReactDOM.render(<Index />, document.getElementById('app'));
