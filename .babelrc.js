@@ -12,6 +12,9 @@ const plugins = [
   // dynamic import
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+
+  // antd-mobile
+  ["import", {libraryName: "antd-mobile", style: "css"}]
 ];
 
 module.exports = {presets, plugins};

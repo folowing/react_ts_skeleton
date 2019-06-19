@@ -2,31 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import './style.scss';
+import { Button } from 'antd-mobile';
 
-interface Result {
-  result: string;
-}
-
-class Index extends React.Component<object, Result> {
-  public constructor(props) {
-    super(props);
-
-    this.state = {
-      result: '',
-    };
-  }
-
-  public async componentDidMount() {
-    const module = await import('./math');
-    const Math = module.default;
-    const title = `4 * 4 = ${Math.square(5)}`;
-    this.setState({
-      result: title,
-    });
-  }
-
+class Index extends React.Component<object, object> {
   public render() {
-    return <div>{this.state.result}</div>;
+    return <Button>Start</Button>;
   }
 }
 
