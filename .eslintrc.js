@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
 
   env: {
+    node: true,
     browser: true,
     // "jasmine": true,
     // "jest": true

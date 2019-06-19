@@ -31,7 +31,6 @@ module.exports = {
       chunksSortMode: 'auto',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
   ],
   module: {
     rules: [
@@ -133,5 +132,6 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
+    noEmitOnErrors: true,
   },
 };

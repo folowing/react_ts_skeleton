@@ -31,3 +31,7 @@ class Index extends React.Component<object, Result> {
 }
 
 ReactDOM.render(<Index />, document.getElementById('app'));
+
+if (module.hot) {
+  module.hot.accept();
+}
