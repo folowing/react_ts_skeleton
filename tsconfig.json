@@ -16,8 +16,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
-    "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "outDir": "./dist/ts"
+    "noEmit": false,
+    "sourceMap": true
   },
   "include": [
     "src"
