@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "jsx": "preserve",
-    "outDir": "./dist/ts"
+    "outDir": "./dist/ts",
     "noEmit": false,
     "sourceMap": true
   },

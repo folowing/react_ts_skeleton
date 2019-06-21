@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import './style.scss';
 
@@ -7,14 +7,12 @@ interface Result {
   result: string;
 }
 
-class Index extends React.Component<object, Result> {
-  public constructor(props) {
-    super(props);
+interface Props {}
 
-    this.state = {
-      result: '',
-    };
-  }
+class Index extends Component<Props, Result> {
+  state = {
+    result: '',
+  };
 
   public async componentDidMount() {
     const module = await import('./math');
