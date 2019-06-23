@@ -57,12 +57,32 @@ module.exports = {
       // },
       {
         test: /\.css$/,
+        exclude: /\.module\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              sourceMap: true,
+              localsConvention: 'camelCase',
+            },
+          },
+          'postcss-loader',
+        ],
+      },
+      // module css
+      {
+        test: /\.module\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              localsConvention: 'camelCase',
+              modules: true,
             },
           },
           'postcss-loader',
@@ -70,35 +90,37 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.module\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
+              importLoaders: 2,
+              sourceMap: true,
+              localsConvention: 'camelCase',
             },
           },
           'postcss-loader',
           'sass-loader',
         ],
       },
+      // module scss
       {
-        test: /\.sass$/,
+        test: /\.module\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
+              importLoaders: 2,
+              sourceMap: true,
+              localsConvention: 'camelCase',
+              modules: true,
             },
           },
           'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              indentedSyntax: true,
-            },
-          },
+          'sass-loader',
         ],
       },
       {
