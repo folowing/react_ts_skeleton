@@ -15,6 +15,7 @@ module.exports = {
     compress: true,
     port: 9000,
     hot: true,
+    // historyApiFallback: true,  // Browser router
   },
   entry: [
     './src/index.tsx',
