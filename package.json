@@ -14,10 +14,10 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1"
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
