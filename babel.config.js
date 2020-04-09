@@ -4,8 +4,12 @@ module.exports = function(api) {
   const presets = ['@babel/env', '@babel/typescript', '@babel/react'];
 
   const plugins = [
-    '@babel/plugin-proposal-class-properties',
     '@babel/plugin-transform-runtime',
+    '@babel/plugin-proposal-optional-chaining',
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+    ['@babel/plugin-transform-classes', { loose: true }],
+    ['@babel/plugin-transform-template-literals', { loose: true }],
+    ['lodash'],
   ];
 
   return { presets, plugins };

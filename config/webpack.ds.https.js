@@ -1,44 +1,52 @@
-// Webpack prd config
+// Webpack https dev server config
 /* eslint import/no-extraneous-dependencies: 0 */
 
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// const StyleLintPlugin = require('stylelint-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
-const BASE_URL = '//your_cdn_domain.com/xxxx/';
+const BASE_URL = '/app/';
 
 const VARIABLES = {
   __XXXXX__: JSON.stringify('???????'),
 };
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.resolve(__dirname, '../dist/ds'),
+    compress: true,
+    host: '0.0.0.0',
+    port: 443,
+    hot: true,
+    disableHostCheck: true,
+    historyApiFallback: {
+      index: BASE_URL + '/index.html',
+    },
+    openPage: 'https://your_domain.com' + BASE_URL,
+    https: {
+      key: fs.readFileSync('/path_to.key'),
+      cert: fs.readFileSync('/path_to_ssl_certificate.cer'),
+    },
+  },
   entry: ['./src/index.tsx'],
   plugins: [
-    new CleanWebpackPlugin({
-      root: path.join(__dirname, '../dist/prd'),
-      verbose: true,
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'static/css/[name]/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name]/[name].[contenthash:8].css',
-    }),
+    // new StyleLintPlugin({
+    //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+    // }),
     new HtmlWebpackPlugin({
-      title: 'PRD ENV',
+      title: 'DEV ENV',
       favicon: 'src/assets/favicon.ico',
       template: 'src/assets/index.html',
-      minify: {
-        collapseWhitespace: true,
-      },
+      minify: false,
       chunksSortMode: 'auto',
     }),
-    new webpack.HashedModuleIdsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new LodashModuleReplacementPlugin({
       shorthands: true,
       collections: true,
@@ -74,11 +82,12 @@ module.exports = {
         test: /\.css$/,
         exclude: /\.m\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              sourceMap: true,
               localsConvention: 'camelCaseOnly',
             },
           },
@@ -89,13 +98,16 @@ module.exports = {
       {
         test: /\.m\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              sourceMap: true,
               localsConvention: 'camelCaseOnly',
-              modules: true,
+              modules: {
+                localIdentName: '[path][name]__[local]',
+              },
             },
           },
           'postcss-loader',
@@ -105,11 +117,12 @@ module.exports = {
         test: /\.scss$/,
         exclude: /\.m\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
+              sourceMap: true,
               localsConvention: 'camelCase',
             },
           },
@@ -121,11 +134,12 @@ module.exports = {
       {
         test: /\.m\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
+              sourceMap: true,
               localsConvention: 'camelCase',
               modules: true,
             },
@@ -142,7 +156,7 @@ module.exports = {
             options: {
               limit: 8192,
               outputPath: 'static/img',
-              name: '[name].[contenthash:8].[ext]',
+              name: '[name].[ext]',
               publicPath: BASE_URL + 'static/img/',
             },
           },
@@ -152,8 +166,9 @@ module.exports = {
   },
   output: {
     publicPath: BASE_URL,
-    filename: 'static/js/[name]/[name].[contenthash:8].js',
-    path: path.resolve(__dirname, '../dist/prd'),
+    filename: 'static/js/[name].js',
+    path: path.resolve(__dirname, '../dist/ds'),
+    pathinfo: false,
   },
   resolve: {
     extensions: ['*', '.js', '.jsx', '.tsx', '.ts', '.json'],
@@ -164,34 +179,9 @@ module.exports = {
     },
   },
   optimization: {
-    // runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            unused: true,
-            dead_code: true,
-            drop_console: true,
-          },
-          warnings: false,
-        },
-        cache: true,
-        parallel: true,
-        sourceMap: false,
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-  },
-  stats: {
-    children: false,
+    removeAvailableModules: false,
+    removeEmptyChunks: false,
+    splitChunks: false,
+    noEmitOnErrors: true,
   },
 };
