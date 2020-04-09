@@ -5,7 +5,14 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
+const BASE_URL = '/app/';
+
+const VARIABLES = {
+  __XXXXX__: JSON.stringify('???????'),
+};
 
 module.exports = {
   mode: 'development',
@@ -13,13 +20,16 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, '../dist/ds'),
     compress: true,
-    port: 9000,
+    host: '0.0.0.0',
+    port: 80,
     hot: true,
-    // historyApiFallback: true,  // Browser router
+    disableHostCheck: true,
+    historyApiFallback: {
+      index: BASE_URL + 'index.html',
+    },
+    openPage: 'http://localhost' + BASE_URL,
   },
-  entry: [
-    './src/index.tsx',
-  ],
+  entry: ['./src/index.tsx'],
   plugins: [
     // new StyleLintPlugin({
     //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
@@ -32,6 +42,14 @@ module.exports = {
       chunksSortMode: 'auto',
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new LodashModuleReplacementPlugin({
+      shorthands: true,
+      collections: true,
+      caching: true,
+      exotics: true,
+    }),
+    new MomentLocalesPlugin(),
+    new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
     rules: [
@@ -48,15 +66,16 @@ module.exports = {
       },
       // {
       //   test: /\.html$/,
-      //   use: [
-      //     {
-      //       loader: 'html-loader'
+      //   use: {
+      //     loader: 'html-loader',
+      //     options: {
+      //       interpolate: true
       //     }
-      //   ]
+      //   }
       // },
       {
         test: /\.css$/,
-        exclude: /\.module\.css$/,
+        exclude: /\.m\.css$/,
         use: [
           'style-loader',
           {
@@ -64,7 +83,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               sourceMap: true,
-              localsConvention: 'camelCase',
+              localsConvention: 'camelCaseOnly',
             },
           },
           'postcss-loader',
@@ -72,7 +91,7 @@ module.exports = {
       },
       // module css
       {
-        test: /\.module\.css$/,
+        test: /\.m\.css$/,
         use: [
           'style-loader',
           {
@@ -80,8 +99,10 @@ module.exports = {
             options: {
               importLoaders: 1,
               sourceMap: true,
-              localsConvention: 'camelCase',
-              modules: true,
+              localsConvention: 'camelCaseOnly',
+              modules: {
+                localIdentName: '[path][name]__[local]',
+              },
             },
           },
           'postcss-loader',
@@ -89,7 +110,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /\.module\.scss$/,
+        exclude: /\.m\.scss$/,
         use: [
           'style-loader',
           {
@@ -106,7 +127,7 @@ module.exports = {
       },
       // module scss
       {
-        test: /\.module\.scss$/,
+        test: /\.m\.scss$/,
         use: [
           'style-loader',
           {
@@ -129,9 +150,9 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              outputPath: 'images',
+              outputPath: 'static/img',
               name: '[name].[ext]',
-              publicPath: '/images/',
+              publicPath: BASE_URL + 'static/img/',
             },
           },
         ],
@@ -139,7 +160,8 @@ module.exports = {
     ],
   },
   output: {
-    filename: '[name].js',
+    publicPath: BASE_URL,
+    filename: 'static/js/[name].js',
     path: path.resolve(__dirname, '../dist/ds'),
     pathinfo: false,
   },

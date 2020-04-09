@@ -2,29 +2,34 @@
 /* eslint import/no-extraneous-dependencies: 0 */
 
 const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
+const BASE_URL = '/app/';
+
+const VARIABLES = {
+  __XXXXX__: JSON.stringify('???????'),
+};
 
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: [
-    './src/index.tsx',
-  ],
+  entry: ['./src/index.tsx'],
   plugins: [
     // new StyleLintPlugin({
     //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
     // }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['dist/dev'],
+    }),
     new MiniCssExtractPlugin({
       filename: 'static/css/[name].css',
     }),
-    new CleanWebpackPlugin(
-      {
-        cleanOnceBeforeBuildPatterns: ['dist/dev'],
-      }),
     new HtmlWebpackPlugin({
       title: 'DEV ENV',
       favicon: 'src/assets/favicon.ico',
@@ -32,6 +37,14 @@ module.exports = {
       minify: false,
       chunksSortMode: 'auto',
     }),
+    new LodashModuleReplacementPlugin({
+      shorthands: true,
+      collections: true,
+      caching: true,
+      exotics: true,
+    }),
+    new MomentLocalesPlugin(),
+    new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
     rules: [
@@ -57,7 +70,7 @@ module.exports = {
       // },
       {
         test: /\.css$/,
-        exclude: /\.module\.css$/,
+        exclude: /\.m\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -65,7 +78,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               sourceMap: true,
-              localsConvention: 'camelCase',
+              localsConvention: 'camelCaseOnly',
             },
           },
           'postcss-loader',
@@ -73,7 +86,7 @@ module.exports = {
       },
       // module css
       {
-        test: /\.module\.css$/,
+        test: /\.m\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -81,7 +94,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               sourceMap: true,
-              localsConvention: 'camelCase',
+              localsConvention: 'camelCaseOnly',
               modules: true,
             },
           },
@@ -90,7 +103,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /\.module\.scss$/,
+        exclude: /\.m\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -107,7 +120,7 @@ module.exports = {
       },
       // module scss
       {
-        test: /\.module\.scss$/,
+        test: /\.m\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -130,9 +143,9 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
-              outputPath: 'images',
+              outputPath: 'static/img',
               name: '[name].[ext]',
-              publicPath: './static/img/',
+              publicPath: BASE_URL + 'static/img/',
             },
           },
         ],
@@ -140,6 +153,7 @@ module.exports = {
     ],
   },
   output: {
+    publicPath: BASE_URL,
     filename: 'static/js/[name].js',
     path: path.resolve(__dirname, '../dist/dev'),
     pathinfo: false,
