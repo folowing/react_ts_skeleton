@@ -7,7 +7,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const BASE_URL = '/app/';
@@ -18,7 +17,7 @@ const VARIABLES = {
 
 module.exports = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   entry: ['./src/index.tsx'],
   plugins: [
     // new StyleLintPlugin({
@@ -36,12 +35,6 @@ module.exports = {
       template: 'src/assets/index.html',
       minify: false,
       chunksSortMode: 'auto',
-    }),
-    new LodashModuleReplacementPlugin({
-      shorthands: true,
-      collections: true,
-      caching: true,
-      exotics: true,
     }),
     new MomentLocalesPlugin(),
     new webpack.DefinePlugin(VARIABLES),
@@ -170,5 +163,6 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
+    emitOnErrors: true,
   },
 };

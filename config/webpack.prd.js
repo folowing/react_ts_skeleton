@@ -8,7 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const BASE_URL = '//your_cdn_domain.com/xxxx/';
@@ -37,13 +36,6 @@ module.exports = {
         collapseWhitespace: true,
       },
       chunksSortMode: 'auto',
-    }),
-    new webpack.HashedModuleIdsPlugin(),
-    new LodashModuleReplacementPlugin({
-      shorthands: true,
-      collections: true,
-      caching: true,
-      exotics: true,
     }),
     new MomentLocalesPlugin(),
     new webpack.DefinePlugin(VARIABLES),
@@ -190,6 +182,7 @@ module.exports = {
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
+    moduleIds: 'deterministic'
   },
   stats: {
     children: false,

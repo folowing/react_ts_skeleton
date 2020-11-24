@@ -6,7 +6,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const BASE_URL = '/app/';
@@ -17,8 +16,9 @@ const VARIABLES = {
 
 module.exports = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
+    publicPath: BASE_URL,
     contentBase: path.resolve(__dirname, '../dist/ds'),
     compress: true,
     host: '0.0.0.0',
@@ -45,13 +45,6 @@ module.exports = {
       template: 'src/assets/index.html',
       minify: false,
       chunksSortMode: 'auto',
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new LodashModuleReplacementPlugin({
-      shorthands: true,
-      collections: true,
-      caching: true,
-      exotics: true,
     }),
     new MomentLocalesPlugin(),
     new webpack.DefinePlugin(VARIABLES),
@@ -182,6 +175,5 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
-    noEmitOnErrors: true,
   },
 };
