@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config ./config/webpack.ds.js",
-    "start:https": "webpack-dev-server --open --config ./config/webpack.ds.https.js",
+    "start": "webpack serve --open --config ./config/webpack.ds.js",
+    "start:https": "webpack serve --open --config ./config/webpack.ds.https.js",
     "build": "webpack --config ./config/webpack.dev.js",
     "build:prd": "webpack --config ./config/webpack.prd.js",
     "ana": "webpack --config ./config/webpack.prd.analyzer.js",
@@ -50,7 +50,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "file-loader": "^5.1.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.0.0",
     "less-loader": "^5.0.0",
     "lodash-webpack-plugin": "^0.11.6",
     "mini-css-extract-plugin": "^0.9.0",
@@ -69,11 +69,13 @@
     "typescript": "^3.9.7",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^3.0.0",
-    "webpack": "^4.46.0",
+    "webpack": "^5.21.1",
     "webpack-bundle-analyzer": "^3.9.0",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.2"
   },
-  "browserslist": []
+  "browserslist": [
+    "defaults"
+  ]
 }

@@ -37,7 +37,6 @@ module.exports = {
       },
       chunksSortMode: 'auto',
     }),
-    new webpack.HashedModuleIdsPlugin(),
     new LodashModuleReplacementPlugin({
       shorthands: true,
       collections: true,
@@ -163,6 +162,7 @@ module.exports = {
   },
   optimization: {
     // runtimeChunk: 'single',
+    moduleIds: 'deterministic',
     splitChunks: {
       cacheGroups: {
         vendor: {

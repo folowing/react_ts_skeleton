@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import styles from './math.module.scss';
 
 interface State {
@@ -14,10 +15,9 @@ class Math extends Component<Props, State> {
     result: '',
   };
 
-  public async componentDidMount() {
-    const module = await import('./math_func');
-    const Math = module.default;
-    const title = `${this.props.num} * ${this.props.num} = ${Math.square(
+  async componentDidMount() {
+    const { square } = await import('./math_func');
+    const title = `${this.props.num} * ${this.props.num} = ${square(
       this.props.num,
     )}`;
     this.setState({
@@ -25,7 +25,7 @@ class Math extends Component<Props, State> {
     });
   }
 
-  public render() {
+  render() {
     return <div className={styles.mathBox}>{this.state.result}</div>;
   }
 }

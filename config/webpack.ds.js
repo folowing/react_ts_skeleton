@@ -16,6 +16,7 @@ const VARIABLES = {
 const WEB_SERVER_PORT = 9000
 
 module.exports = {
+  target: 'web',
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
@@ -42,7 +43,6 @@ module.exports = {
       minify: false,
       chunksSortMode: 'auto',
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new LodashModuleReplacementPlugin({
       shorthands: true,
       collections: true,
@@ -177,6 +177,5 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
-    noEmitOnErrors: true,
   },
 };
