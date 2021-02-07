@@ -7,7 +7,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const BASE_URL = '/app/';
 
@@ -35,12 +34,6 @@ module.exports = {
       template: 'src/assets/index.html',
       minify: false,
       chunksSortMode: 'auto',
-    }),
-    new LodashModuleReplacementPlugin({
-      shorthands: true,
-      collections: true,
-      caching: true,
-      exotics: true,
     }),
     new webpack.DefinePlugin(VARIABLES),
   ],

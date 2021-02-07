@@ -5,7 +5,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const BASE_URL = '/app/';
 
@@ -43,12 +42,6 @@ module.exports = {
       chunksSortMode: 'auto',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new LodashModuleReplacementPlugin({
-      shorthands: true,
-      collections: true,
-      caching: true,
-      exotics: true,
-    }),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {

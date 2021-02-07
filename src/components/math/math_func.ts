@@ -1,7 +1,3 @@
-function square(num: number): number {
+export const square = (num: number): number => {
   return num * num;
-}
-
-export default {
-  square,
 };
