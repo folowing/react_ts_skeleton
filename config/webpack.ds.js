@@ -15,6 +15,7 @@ const VARIABLES = {
 const WEB_SERVER_PORT = 9000
 
 module.exports = {
+  target: 'web',
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
@@ -41,7 +42,6 @@ module.exports = {
       minify: false,
       chunksSortMode: 'auto',
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
