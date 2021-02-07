@@ -45,7 +45,6 @@ module.exports = {
       minify: false,
       chunksSortMode: 'auto',
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
@@ -174,6 +173,5 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
-    noEmitOnErrors: true,
   },
 };

@@ -36,7 +36,6 @@ module.exports = {
       },
       chunksSortMode: 'auto',
     }),
-    new webpack.HashedModuleIdsPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
@@ -156,6 +155,7 @@ module.exports = {
   },
   optimization: {
     // runtimeChunk: 'single',
+    moduleIds: 'deterministic',
     splitChunks: {
       cacheGroups: {
         vendor: {

@@ -170,6 +170,5 @@ module.exports = {
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: false,
-    noEmitOnErrors: true,
   },
 };
