@@ -16,7 +16,7 @@ const HomepagePage = () => {
     <>
       <h1>homepage</h1>
       <Math num={3} />
-      <div>{_.trim(' Hello, World!!  ')}</div>
+      <div>{_.trim(' Hello, World!  ')}</div>
       <div onClick={gotoDetailPage} className={styles.link}>
         Show Detail
       </div>
