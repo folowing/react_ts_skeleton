@@ -6,13 +6,14 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const BASE_URL = '/app/';
 
 const VARIABLES = {
   __XXXXX__: JSON.stringify('???????'),
 };
+
+const WEB_SERVER_PORT = 9000
 
 module.exports = {
   mode: 'development',
@@ -21,13 +22,13 @@ module.exports = {
     contentBase: path.resolve(__dirname, '../dist/ds'),
     compress: true,
     host: '0.0.0.0',
-    port: 80,
+    port: WEB_SERVER_PORT,
     hot: true,
     disableHostCheck: true,
     historyApiFallback: {
       index: BASE_URL + 'index.html',
     },
-    openPage: 'http://localhost' + BASE_URL,
+    openPage: `http://localhost:${WEB_SERVER_PORT}` + BASE_URL,
   },
   entry: ['./src/index.tsx'],
   plugins: [
@@ -48,7 +49,6 @@ module.exports = {
       caching: true,
       exotics: true,
     }),
-    new MomentLocalesPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {

@@ -9,7 +9,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const BASE_URL = '//your_cdn_domain.com/xxxx/';
 
@@ -45,7 +44,6 @@ module.exports = {
       caching: true,
       exotics: true,
     }),
-    new MomentLocalesPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
