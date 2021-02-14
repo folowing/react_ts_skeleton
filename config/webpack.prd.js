@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
@@ -172,19 +172,15 @@ module.exports = {
         },
       },
     },
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            unused: true,
-            dead_code: true,
-            drop_console: true,
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
           },
-          warnings: false,
         },
-        cache: true,
-        parallel: true,
-        sourceMap: false,
+        extractComments: false,
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],

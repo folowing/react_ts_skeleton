@@ -5,7 +5,7 @@ module.exports = {
   ],
   plugins: ['stylelint-order'],
   rules: {
-    'number-no-trailing-zeros': false,
+    'number-no-trailing-zeros': null,
     'color-hex-length': 'long',
     'color-hex-case': 'upper',
     // rpx
