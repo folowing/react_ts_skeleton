@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 
 const BASE_URL = '/app/';
 
@@ -52,6 +53,7 @@ module.exports = {
       caching: true,
       exotics: true,
     }),
+    new AntdDayjsWebpackPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {

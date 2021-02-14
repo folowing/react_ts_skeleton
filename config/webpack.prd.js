@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 
 const BASE_URL = '//your_cdn_domain.com/xxxx/';
 
@@ -43,6 +44,7 @@ module.exports = {
       caching: true,
       exotics: true,
     }),
+    new AntdDayjsWebpackPlugin(),
     new webpack.DefinePlugin(VARIABLES),
   ],
   module: {
