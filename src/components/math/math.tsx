@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import styles from './math.module.scss';
+import styles from './math.m.scss';
 
 interface State {
   result: string;
